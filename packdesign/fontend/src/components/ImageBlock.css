@@ -1,0 +1,87 @@
+.img-block {
+    border-radius: 5px;
+    margin: 2px;
+
+    height: 75px;
+    width: 75px;
+}
+
+.img-block img {
+    width: 100%;
+    height: 100%;
+}
+
+.hover-text {
+    display: flex;
+    flex-direction: column;
+
+    height: 75px;
+    width: 75px;
+    border-radius: 5px;
+    margin: 2px;
+
+    background-color: rgba(255, 255, 255, 0.2);
+
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.hover-text .title {
+    /* border-radius: 5px; */
+    margin: 5px;
+    font-size: 14px;
+    color: rgb(5, 5, 5);
+}
+
+.hover-text .prompt {
+    /* border-radius: 5px; */
+    margin: 5px;
+    font-size: 10px;
+
+    padding-top: 20px;
+
+    color: gray;
+    text-decoration: underline;
+
+}
+
+
+/* ============== Hover Card ============== */
+
+.info-card {
+    height: 75px;
+    width: 75px;
+    background-color: rgba(255, 255, 255, 0.6);
+
+    position: absolute;
+    top: 0px;
+    left: 0px;
+}
+
+.info-card .hover-text {
+    display: flex;
+    flex-direction: column;
+
+    height: 100%;
+    width: 100%;
+}
+
+.info-card .hover-text .title {
+    /* border-radius: 5px; */
+    margin: 5px;
+    font-size: 14px;
+    color: rgb(5, 5, 5);
+}
+
+.info-card .hover-text .prompt {
+    /* border-radius: 5px; */
+    margin: 5px;
+    font-size: 10px;
+
+    padding-top: 20px;
+
+    color: gray;
+    text-decoration: underline;
+
+}

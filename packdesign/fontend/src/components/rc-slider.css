@@ -1,0 +1,32 @@
+.control-slider {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    
+    width: 100%;
+    margin: 10px 0px;
+}
+
+.control-slider .slider-bar{
+    flex: 1;
+    margin: 0px 12px 0px 15px;
+}
+
+.control-slider .slider-title{
+    /* width: 25px; */
+    font-size: 11px;
+    text-align: right;
+    width: 10%;
+}
+
+.control-slider .slider-value{
+    /* width: 25px; */
+    font-size: 11px;
+    text-align: left;
+    width: 10%;
+}
+
+/* .control-slider .slider-value{
+    margin-right: 8px;
+} */

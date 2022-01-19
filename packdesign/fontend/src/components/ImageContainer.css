@@ -1,0 +1,12 @@
+.img-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+}
+
+.img-container img{
+    margin: 10px;
+    height: fit-content;
+    width: fit-content;
+}

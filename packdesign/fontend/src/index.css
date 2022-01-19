@@ -1,0 +1,147 @@
+html {
+  width: 100%;
+  height: 100%;
+  background-color: lightgrey;
+}
+
+body {
+  font: 14px "Century Gothic", Futura, sans-serif;
+  margin: 0px;
+  height: 100%;
+
+}
+
+.page {
+  display: flex;
+  direction: row;
+  height: 100%;
+}
+
+#root {
+  height: 100%;
+}
+  
+/* ol, ul {
+  padding-left: 30px;
+} */
+
+/* ============ Option Column =========== */
+
+.option-column {
+  display: flex;
+  flex-direction: column;
+  width: 30%;
+  height: 100%;
+  margin: 0px;
+  align-content: space-between;
+}
+
+.option-header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+
+  margin: 0px;
+  height: 50px;
+  width: 100%;
+
+  background-color: #091640;
+}
+
+.option-header img {
+  display: flex;
+
+  height: 60%;
+  margin-left: 2px;
+  margin-right: 2px;
+}
+
+.option-header span {
+  display: flex;
+  /* flex: 1; */
+  align-items: center;
+  justify-content: center;
+
+  font-size: 12px;
+  color: white;
+}
+
+.option-operation-row {
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+
+  margin: 0;
+  width: 100%;
+}
+
+.option-btns {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  width: 60px;
+  /* margin: 1px 1px 1px 0px; */
+
+  background-color: #091640;
+}
+
+.option-console {
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+  align-content: center;
+  flex: 1;
+
+
+  /* margin: 1px 0; */
+  background-color: #162654;
+}
+
+.option-footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  background-color: #091640;
+
+  height: 50px;
+  width: 100%;
+}
+
+/*=========== Display Column ================*/
+
+.display-column {
+  width: 70%;
+  height: 100%;
+  margin: 0px;
+}
+
+.display-header {
+  display: flex;
+  flex-direction: row;
+
+  justify-content: center;
+  align-items: center;
+
+  width: 100%;
+  height: 50px;
+  margin: 0px;
+
+  background-color: white;
+}
+
+.display-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  width: 100%;
+  height: 100%;
+}
+.display-container .img-container {
+  height: 70%;
+  width: 70%;
+}

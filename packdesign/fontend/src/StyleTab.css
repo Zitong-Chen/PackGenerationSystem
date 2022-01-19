@@ -1,0 +1,171 @@
+.console-style {
+    display: flex;
+    flex-direction: column;
+
+    /* width: 85%; */
+    margin: 15px;
+}
+
+/* ============ Tab Buttons ================= */
+.console-style .style-tab-btns{
+    display: flex;
+    flex-direction: row;
+
+    width: 100%;
+    justify-content: space-between;
+
+    /* margin: 15px; */
+}
+
+.style-tab-btn-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 80px;
+    height: 35px;
+
+    /* border-style: solid;
+    border-width: 0.5px;
+    border-color: whitesmoke;*/
+    border-radius: 5px; 
+    /* margin: 15px; */
+}
+
+.style-tab-btn-container:hover {
+    background-color: #2f437e !important;
+}
+
+.style-tab-btn-container .style-tab-btn .text {
+    font-size: 12px;
+}
+
+
+/* ============ tab content ================= */
+
+.console-style .style-tab-contents {
+    width: 100%;
+    margin:25px 0px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.color-style-control {
+    width: 95%;
+
+    display: flex;
+    flex-direction: column;
+
+}
+
+.gan-style-control {
+    width: 95%;
+
+    display: flex;
+    flex-direction: column;
+    /* margin: 0px; */
+}
+
+.upload-style-control {
+    width: 95%;
+
+    display: flex;
+    flex-direction: column;
+
+    align-content: center;
+    justify-content: center;
+}
+
+/* ============ TabContent: GAN Styles ================= */
+
+.style-btns{
+    display: flex;
+    flex-direction: row;
+
+    width: 100%;
+    margin-top: 15px;
+}
+
+.style-btn-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 55px;
+    height: 30px;
+
+    /* border-style: solid;
+    border-width: 0.5px;
+    border-color: whitesmoke;*/
+    border-radius: 5px; 
+    margin: 5px;
+}
+
+.style-btn-container:hover {
+    background-color: #2f437e !important;
+}
+
+.style-btn-container .style-btn .text {
+    font-size: 10px;
+}
+
+
+.style-generate {
+    display: flex;
+    flex-direction: row;
+
+    align-items:  center;
+    justify-content: space-between;
+
+    margin: 25px 0px;
+}
+
+.generate-slider {
+    width: 65%;
+    margin-left: 10px;
+}
+
+.generate-img-block {
+    display: flex;
+    flex-direction: row;
+    align-items:  center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+
+.style-adjust {
+    display: flex;
+    flex-direction: column;
+
+    margin: 15px 0px;
+    width: 100%;
+}
+
+/* ============ upload box ================= */
+.upload-box {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 8px;
+    border-color: white;
+    border-width: 2px;
+
+    height: 100px;
+    width: 90%;
+
+    cursor: pointer;
+}
+
+.upload-box img {
+    height: 30px;
+    width: 30px;
+}
+
+.upload-box span {
+    margin-left: 20px;
+}

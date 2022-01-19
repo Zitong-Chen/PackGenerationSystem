@@ -1,0 +1,93 @@
+/* ============ Vertical ================= */
+.vertical-btn-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 100%;
+    height: 70px;
+}
+
+
+
+.vertical-btn-container .vertical-optionbtn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 32px;
+    /* margin: 10px; */
+}
+
+.vertical-optionbtn .image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.vertical-optionbtn .image img {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 75%;
+}
+
+.vertical-optionbtn .text {
+    justify-content: center;
+    align-items: center;
+    margin-top: 2px;
+    display: flex;
+    height: 20px;
+    font-size: 10px;
+    color: white;
+}
+
+
+/* ============ Horizontal ================= */
+
+.horizontal-btn-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    height: 100%;
+    width: 100%;
+}
+
+/* .horizontal-btn-container:hover {
+    background-color: #162654;
+} */
+
+.horizontal-optionbtn {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    height: 32px;
+    /* margin: 10px; */
+}
+
+
+.horizontal-optionbtn .image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.horizontal-optionbtn .image img {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 75%;
+}
+
+.horizontal-optionbtn .text {
+    justify-content: center;
+    align-items: center;
+    margin-left: 2px;
+    display: flex;
+    width: auto;
+    font-size: 12px;
+    color: white;
+}
