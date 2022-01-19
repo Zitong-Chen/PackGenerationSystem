@@ -1,0 +1,703 @@
+<html lang="zh">
+<head>
+    <!--- basic page needs 
+    ================================================== -->
+    <meta charset="utf-8">
+    <meta name="description" content="">
+    <meta name="author" content="LiaoJing">
+    <!-- mobile specific metas
+    ================================================== -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- CSS ================================================== -->
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/customer1.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/dropzone-5.7.0.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/bootstrap-3.3.7.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/viewer.min.css') }}">
+    <!-- JS =================================================== -->
+    <script type="text/javascript" src="{{ url_for('static',filename='js/jquery-3.2.1.min.js') }}"></script>
+    <!-- <script type="text/javascript" src="{{ url_for('static',filename='js/go-debug.js') }}"></script> -->
+    <script type="text/javascript" src="{{ url_for('static',filename='js/dropzone-5.7.0.min.js')}}"></script>
+    <script type="text/javascript" src="{{ url_for('static',filename='js/bootstrap-3.3.7.min.js')}}"></script>
+    <script type="text/javascript" src="{{ url_for('static',filename='js/viewer.min.js')}}"></script>
+    <script type="text/javascript" src="{{ url_for('static',filename='js/bootstrap-paginator.js')}}"></script>
+    <title>xiyuan</title>
+</head>
+
+<body>
+<!-- <div><img id="logo"></div> -->
+
+<div class="row" style="margin-left:5px;margin-right:5px;margin-top:20px;">
+    <!-- tab panel -->
+    <div class="col-md-12">
+        <div class="row" style="margin-bottom: 10px">
+            <div class="col-md-6">
+                <ul id="mainTab" class="nav nav-tabs">
+                    <li class="active"><a href="#sketch" data-toggle="tab">绘制草图</a></li>
+                    <li><a href="#file" data-toggle="tab">上传草图</a></li>
+                </ul>
+
+                <div id="mainTabContent" class="tab-content">
+                    <!-- Panel for #sketch -->
+                    <div id="sketch" class="tab-pane fade in active">
+                        <div class="col-md-12">
+                            <canvas id="drawCanvas" width="530px" height="530px"></canvas>
+                        </div>
+
+                        <div class="col-md-12">
+                            <div class="col-md-3" style="margin-top: 20px;float:left">
+                                <button type="submit" id="pen_btn" class="icon-btn"></button>
+                                <button type="submit" id="esr_btn" class="icon-btn"></button>
+                            </div>
+
+                            <div class="col-md-6" style="margin-top: 15px;float:left">
+                                <input type="range" id="input_range" class="slidebar" min="0" max="14" step="0.2"
+                                       value="7.0" style="margin-top:10px;">
+                            </div>
+                            <div class="col-md-3" style="margin-top: 20px;float:left">
+                                <button type="submit" id="clear_btn" class="icon-btn"></button>
+                            </div>
+                        </div>
+
+                    </div> <!-- #sketch panel -->
+
+                    <!-- Panel for #file -->
+                    <div id="file" class="tab-pane fade">
+                        <div class="customerdropzone" style="margin-top: 30px">
+                            <form action="/upload" method="post" class="dropzone needsclick dz-clickable"
+                                  id="myDropzone" style="border: 0px;">
+                                <div class="dz-message needsclick" style="margin-top: 100px;">
+                                    <!-- <div class="dz-default dz-clickable"> -->
+                                    <h4>拖动文件至此或者点击上传</h4>
+                                    <div class="dz-icon icon-wrap icon-circle icon-wrap-md">
+                                        <i class="fa fa-cloud-upload fa-3x"></i>
+                                    </div>
+                                </div>
+                            </form>
+                            <button class="btn btn-primary" id="submit_all">提交</button>
+                        </div>
+
+                    </div> <!-- #file panel -->
+                </div> <!-- tab content -->
+            </div>
+
+            <div class="col-md-6">
+                <ul id="divgTab" class="nav nav-tabs">
+                    <li class="active"><a href="#adjust" data-toggle="tab">生成结果</a></li>
+                    <li><a href="#galley" data-toggle="tab">素材库</a></li>
+                </ul>
+                <div id="divgTabContent" class="tab-content">
+                    <div id="adjust" class="tab-pane fade in active">
+                        <div class="container">
+                            <!-- <h5>调整生成结果</h5> -->
+
+                            <div class="row" style="margin-left: 5px;">
+                                <div class="col-md-3">
+                                    <img id="result_img2" class="preview-img" hidden alt="">
+                                    <img id="adjust_img2" class="preview-img" visible alt="">
+                                </div>
+                                <div class="col-md-3">
+                                    <img id="result_img1" class="preview-img" hidden alt="">
+                                    <img id="adjust_img1" class="preview-img" visible alt="">
+                                </div>
+                            </div>
+                            <div class="row" style="margin-left: 5px;">
+                                <div class="col-md-3">
+                                    <img id="result_img3" class="preview-img" hidden alt="">
+                                    <img id="adjust_img3" class="preview-img" visible alt="">
+                                </div>
+                                <div class="col-md-3 ">
+                                    <img id="result_img4" class="preview-img" hidden alt="">
+                                    <img id="adjust_img4" class="preview-img" visible alt="">
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <br> -->
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div style="margin-top: 25px; margin-left:20px;">
+                                   生成
+                                </div>
+                                <div><button type="submit" id="style_btn" class="icon-btn"></button></div>
+                                   <div id="myProgress" style="margin-top: 20px;z-index: 1;" >
+                                <div id="myBar">10%</div>
+                            </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- Panel for #archive -->
+                    <div id="galley" class="tab-pane fade">
+                        <div style="margin-top:8px; margin-bottom:-2px; margin-left: 8px;">
+                            <input id="type_checkbox" type="checkbox" checked="checked"> 效果图像
+                        </div>
+                        <div class="archive22">
+                            <div><img id="img0" src="" alt="image"></div>
+                            <div><img id="img1" src="" alt="image"></div>
+                            <div><img id="img2" src="" alt="image"></div>
+                            <div><img id="img3" src="" alt="image"></div>
+                            <div><img id="img4" src="" alt="image"></div>
+                            <div><img id="img5" src="" alt="image"></div>
+                            <div><img id="img6" src="" alt="image"></div>
+                            <div><img id="img7" src="" alt="image"></div>
+                            <div><img id="img8" src="" alt="image"></div>
+                        </div>
+                        <div style="text-align: center; margin-top: -18px;">
+                            <ul class="pagination" id="paginator">
+                                {#
+                                <li class="page_btn"><a href="#">&laquo;</a></li>
+                                <li class="active page_cnt"><a href="javascript:void(0)">1</a></li>
+                                <li class="page_cnt"><a href="javascript:void(0)">2</a></li>
+                                <li class="page_cnt"><a href="javascript:void(0)">3</a></li>
+                                <li class="page_cnt"><a href="javascript:void(0)">4</a></li>
+                                <li class="page_cnt"><a href="javascript:void(0)">5</a></li>
+                                <li class="page_cnt"><a href="javascript:void(0)">6</a></li>
+                                <li class="page_cnt"><a href="javascript:void(0)">7</a></li>
+                                <li class="page_btn"><a href="#">&raquo;</a></li>
+                                #}
+                            </ul>
+                        </div>
+                    </div>
+                </div> <!-- divgTabContent -->
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Events Binding -->
+<script type="text/javascript">
+    // global variable definition
+    let current_page = 1;
+    let epoch_id = 0;
+    let n_drawings = 0;
+    let n_triggerdraw = 1000;
+    let PRODUCT_TYPE = "trolleycase0331"
+// preview-img
+    $(document).ready(function() {
+        initialize(document.getElementById("drawCanvas"));
+
+        document.getElementById("result_img1").src = "/static/images/preview.jpg";
+        document.getElementById("adjust_img1").src = "/static/images/preview.jpg";
+        document.getElementById("result_img2").src = "/static/images/preview.jpg";
+        document.getElementById("adjust_img2").src = "/static/images/preview.jpg";
+        document.getElementById("result_img3").src = "/static/images/preview.jpg";
+        document.getElementById("adjust_img3").src = "/static/images/preview.jpg";
+        document.getElementById("result_img4").src = "/static/images/preview.jpg";
+        document.getElementById("adjust_img4").src = "/static/images/preview.jpg";
+
+        // document.getElementById("logo").src = "/static/images/CoIdeate_logo.png"
+        document.getElementById("myProgress").style.visibility = "hidden"
+
+        // document.getElementById("sketchImg").src = "/static/images/blank.jpg"
+        // document.getElementById("generate_div").style.visibility = "hidden"
+
+        let viewer = new Viewer(document.getElementById('adjust_img1'), {
+            toolbar: 2,
+        });
+        loadImages(PRODUCT_TYPE, current_page, "color");
+        // 设置图片查看工具，由viewer.js实现
+        for(let i=0; i<9; i++){
+            $("#img"+i).click(function(){
+                var viewer = new Viewer(this, {toolbar: 2,});
+                viewer.show();
+            });
+        }
+
+        // 选中/取消“效果图像”
+        $("#type_checkbox").change(function(){
+            if(this.checked) {
+                loadImages(PRODUCT_TYPE, current_page, "color");
+            }
+            else {
+                loadImages(PRODUCT_TYPE, current_page, "sketch");
+            }
+        })
+
+        $("#pen_btn").click(function(){
+            $(this).addClass('selected')
+            $("#esr_btn").removeClass('selected')
+            let context = document.getElementById("drawCanvas").getContext("2d");
+            context.strokeStyle = strokeStyle;
+            context.lineWidth = document.getElementById("input_range").value
+        });
+
+        $("#esr_btn").click(function(){
+            $(this).addClass('selected')
+            $("#pen_btn").removeClass('selected')
+            let context = document.getElementById("drawCanvas").getContext("2d");
+            context.strokeStyle = fillStyle;
+            context.lineWidth = document.getElementById("input_range").value
+        });
+
+        $("#clear_btn").click(function(){
+            let canvas = document.getElementById("drawCanvas")
+            let context = canvas.getContext("2d");
+            context.clearRect(0, 0, canvas.width, canvas.height);
+            // avoid dark background when save the canvas in jpg
+            context.fillRect(0, 0, canvas.width, canvas.height);
+            // reset images
+            // document.getElementById("result_img").src = "/static/images/preview.jpg";
+            // document.getElementById("adjust_img").src = "/static/images/preview.jpg";
+
+            document.getElementById("result_img1").src = "/static/images/preview.jpg";
+            document.getElementById("adjust_img1").src = "/static/images/preview.jpg";
+            document.getElementById("result_img2").src = "/static/images/preview.jpg";
+            document.getElementById("adjust_img2").src = "/static/images/preview.jpg";
+            document.getElementById("result_img3").src = "/static/images/preview.jpg";
+            document.getElementById("adjust_img3").src = "/static/images/preview.jpg";
+            document.getElementById("result_img4").src = "/static/images/preview.jpg";
+            document.getElementById("adjust_img4").src = "/static/images/preview.jpg";
+
+            n_drawings = 0
+            $(this).removeClass('active');
+        });
+
+       //
+       $('#style_btn').click(function(){
+            generateDesign(epoch_id); // generate by random picked model
+            // epoch_id += 1;
+        });
+
+        // 颜色发散
+        $('#color_range').on("input", function(){
+            if (document.getElementById("adjust_img").src.indexOf("preview.jpg") == -1) {
+                let form = new FormData();
+                form.append('offset', document.getElementById("color_range").value);
+                form.append('image_base64', document.getElementById("adjust_img").src);
+                let xhr = new XMLHttpRequest();
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState === 4 && xhr.status === 200) {
+                        if (xhr.getResponseHeader('content-type')==='application/json') {
+                            let data = JSON.parse(xhr.responseText);
+                            let img_adjust = document.getElementById("adjust_img")
+                            img_adjust.src = data.img
+                        }
+                    }
+                    else {
+                        //console.log(xhr.responseText);
+                    }
+                }
+                xhr.open('POST', '/adjust_body', true);
+                xhr.send(form);
+            }
+        });
+
+        // 细节发散
+        $("#style_range").on("input", function(e){
+            let v = document.getElementById("style_range").value
+            let form = new FormData();
+            form.append('range_value', v)
+            form.append('product', 'trolleycase')
+            let xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    if (xhr.getResponseHeader('content-type') === 'application/json') {
+                        let data = JSON.parse(xhr.responseText);
+                        let img_adjust = document.getElementById("adjust_img")
+                        img_adjust.src = data.img
+                    }
+                }
+                else {
+                    //console.log(xhr.responseText);
+                }
+            }
+            xhr.open('POST', '/adjust_style', true);
+            xhr.send(form);
+        });
+        $("#input_range").on("input", function(e){
+            let context = document.getElementById("drawCanvas").getContext("2d");
+            // context.strokeStyle = strokeStyle;
+            context.lineWidth = document.getElementById("input_range").value
+        });
+
+        $('#paginator').bootstrapPaginator({
+            bootstrapMajorVersion: 3, //对应bootstrap版本
+            size: 'normal', //分页大小
+            currentPage: 1, //当前页 data.page
+            numberOfPages: 7, //显示的页数
+            totalPages: Math.ceil(parseInt({{ TOTAL }}) / 9), // 总页数 Math.ceil(data.total / data.size)
+            itemTexts: function (type, page, current) {
+                switch (type) {
+                case "first": return "首页";
+                case "prev": return "上一页";
+                case "next": return "下一页";
+                case "last": return "末页";
+                case "page": return page;
+                }
+            },
+            /**
+             * 分页点击事件
+             * @param event [jquery对象]
+             * @param originalEvent [dom原生对象]
+             * @param type [按钮类型]
+             * @param page [点击按钮对应的页码]
+             */
+            onPageClicked: function (event, originalEvent, type, page) {
+                //render(page);//根据点击页数渲染页面
+                let imageType = getCurrentImageType();
+                loadImages(PRODUCT_TYPE, page, imageType)
+                this.currentPage = page;
+                current_page = page;
+                this.timer = setInterval(this.onPageClicked, 5000);
+                window.setInterval("onPageClicked()",3000)
+            }
+        });
+    });
+
+    $('#mainTab a').click(function (e) {
+      e.preventDefault()
+      $(this).tab('show')
+    });
+
+    $('#divgTab a').click(function (e) {
+      e.preventDefault()
+      $(this).tab('show')
+    });
+
+    Dropzone.options.myDropzone = {
+        url: "/upload",
+        method: "post",
+        // dictDefaultMessage: '拖动文件至此或者点击上传', // 设置默认的提示语句
+        dictRemoveLinks: "删除",
+        paramName: "file", // 传到后台的参数名称
+        maxFilesize: 2, // MB,
+        uploadMultiple: false,
+        autoProcessQueue: false,
+        addRemoveLinks: true,
+        dictRemoveFile: "删除",
+
+        init: function () {
+            let submitButton = document.querySelector('#submit_all')
+            let myDropzone = this; // closure
+
+            this.on("addedfile", function(file){
+                // 上传文件时触发的事件
+            });
+
+            this.on("success", function (file, response) {
+                // 上传成功触发的事件
+                imgChange(file.dataURL)
+
+                $('#mainTab a[href="#sketch"]').tab('show');
+
+                //generateDesign();
+                // document.getElementById("adjust_img").style.visibility = "visible"
+            });
+
+            this.on("error", function (file, data) {
+                // 上传失败触发的事件
+            });
+
+            this.on("removedfile", function (file) {
+                // 删除文件时触发的方法
+            });
+
+            submitButton.addEventListener("click", function() {
+                myDropzone.processQueue(); // Tell Dropzone to process all queued files.
+            });
+        }
+    };
+
+    function getCurrentImageType(){
+        let imageType = "sketch";
+        if (document.getElementById("type_checkbox").checked){
+            imageType = "color";
+        }
+        return imageType;
+    }
+
+    function loadImages(product, pageID, type){
+        let xhr = new XMLHttpRequest();
+        let form = new FormData();
+        form.append('pageID', pageID)
+        xhr.onreadystatechange = function () {
+            // 根据服务器的响应内容格式处理响应结果
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                if (xhr.getResponseHeader('content-type') === 'application/json') {
+                    let data = JSON.parse(xhr.responseText);
+                    let imgs = data.img_list;
+                    let DATA_FOLDER = data.data_dir;
+                    // alert(DATA_FOLDER)
+
+                    for(let i in imgs){
+                        $("#img"+i+"").attr('src', DATA_FOLDER+imgs[i]+"");
+                        $("#img"+i+"").attr('data-original', DATA_FOLDER+imgs[i]+"");
+                    }
+
+                    $(".archive22 div").each(function(i){
+                        $(this).hover(
+                            function(){
+                            this.className += "current";
+                        },
+                            function(){
+                            this.className = "";
+                        });
+                    });
+                }
+            }
+            else {
+                //console.log(xhr.responseText);
+            }
+        }
+        xhr.open('POST', '/load_images/'+product+"/"+pageID+"/"+type, true);
+        xhr.send(form);
+        // window.setInterval("generateDesign()",3000)
+        this.timer = setInterval(this.generateDesign, 5000);
+
+    }
+
+    // when "generate" button is triggered
+    function generateDesign() {
+        document.getElementById("myProgress").style.visibility = "visible"
+        progressBar();
+
+        let xhr = new XMLHttpRequest();
+        let form = new FormData();
+        let dataurl = document.getElementById("drawCanvas").toDataURL("image/jpeg");
+        form.append('image_base64', dataurl)
+        form.append('epoch_id', epoch_id)
+        // console.log(dataurl);
+        xhr.onreadystatechange = function() {
+            // 根据服务器的响应内容格式处理响应结果
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                if(xhr.getResponseHeader('content-type')==='application/json'){
+                    let data = JSON.parse(xhr.responseText);
+
+                    let img1 = document.getElementById("result_img1")
+                    img1.src = data.img[0]
+                    let img_adjust1 = document.getElementById("adjust_img1")
+                    img_adjust1.src = data.img[0]
+
+                    let img2 = document.getElementById("result_img2")
+                    img2.src = data.img[1]
+                    let img_adjust2 = document.getElementById("adjust_img2")
+                    img_adjust2.src = data.img[1]
+
+                    let img3 = document.getElementById("result_img3")
+                    img3.src = data.img[2]
+                    let img_adjust3 = document.getElementById("adjust_img3")
+                    img_adjust3.src = data.img[2]
+
+                    let img4 = document.getElementById("result_img4")
+                    img4.src = data.img[3]
+                    let img_adjust4 = document.getElementById("adjust_img4")
+                    img_adjust4.src = data.img[3]
+
+                    document.getElementById("myProgress").style.visibility = "hidden"
+                    $("#myBar").css("width","0px");
+                }
+            }
+            else {
+                //console.log(xhr.responseText);
+            }
+        }
+        xhr.open('POST', '/generate', true);
+        xhr.send(form);    
+    }
+
+
+    // progress bar
+    function progressBar(){
+        var elem = document.getElementById("myBar");   
+        var width = 10;
+        var id = setInterval(frame, 10);
+        function frame() {
+            if (width >= 100) {
+                clearInterval(id);
+            }
+            else{
+                width++; 
+                elem.style.width = width + '%'; 
+                elem.innerHTML = width * 1  + '%';
+            }
+        }
+    }
+
+
+</script>
+
+<!-- Canvas Drawing -->
+<script type="text/javascript">
+    let strokeStyle = "black";
+    let fillStyle = "white"
+
+    function initialize(sigCanvas) {
+        // get references to the canvas element as well as the 2D drawing context
+        let context = sigCanvas.getContext("2d");
+        context.strokeStyle = strokeStyle; // "#FFE4C4"
+        // avoid dark background when save the canvas in jpg
+        context.fillStyle = fillStyle;
+        context.fillRect(0, 0, sigCanvas.width, sigCanvas.height);
+        
+        imgChange("/static/images/sketch/bg1.png")
+
+        // setting lineStyle
+        context.lineJoin = "round";
+        context.lineCap = 'round';
+        context.lineWidth = document.getElementById("input_range").value
+
+        // for Windows pad
+        let is_touch_device = 'ontouchstart' in window ||
+            // window.DocumentTouch && document instanceof window.DocumentTouch ||
+            navigator.maxTouchPoints > 0 || window.navigator.msMaxTouchPoints > 0;
+        //alert("Touch device detected: " + is_touch_device);
+        window.setInterval("onPageClicked()",3000)
+        this.timer = setInterval(this.onPageClicked, 5000);
+        if (is_touch_device) {
+            // create a drawer which tracks touch movements
+            let drawer = {
+                isDrawing: false,
+                n_touch_drawing: n_drawings,
+                touchstart: function(coors) {
+                    context.beginPath();
+                    context.moveTo(coors.x, coors.y);
+                    this.isDrawing = true;
+                },
+                touchmove: function(coors) {
+                    if (this.isDrawing) {
+                        context.lineTo(coors.x, coors.y);
+                        context.stroke();
+                    }
+                },
+                touchend: function(coors) {
+                    if (this.isDrawing) {
+                        this.touchmove(coors);
+                        this.isDrawing = false;
+                    }
+                }
+            };
+            // create a function to pass touch events and coordinates to drawer
+            function draw(event) {
+                // get the touch coordinates.  Using the first touch in case of multi-touch
+                let coors = {
+                    x: event.targetTouches[0].pageX,
+                    y: event.targetTouches[0].pageY
+                };
+                // Now we need to get the offset of the canvas location
+                let obj = sigCanvas;
+
+                if (obj.offsetParent) {
+                    // Every time we find a new object, we add its offsetLeft and offsetTop to curleft and curtop.
+                    do {
+                        coors.x -= obj.offsetLeft;
+                        coors.y -= obj.offsetTop;
+                    }
+                    // The while loop can be "while (obj = obj.offsetParent)" only, which does return null
+                    // when null is passed back, but that creates a warning in some editors (i.e. VS2010).
+                    while ((obj = obj.offsetParent) != null);
+                }
+                // pass the coordinates to the appropriate handler
+                drawer[event.type](coors);
+
+                if(event.type=="touchstart"){
+                    if(n_drawings > n_triggerdraw){
+                       generateDesign(epoch_id);
+                    }
+                    n_drawings+=1;
+                }
+            }
+            // attach the touchstart, touchmove, touchend event listeners.
+            sigCanvas.addEventListener('touchstart', draw, false);
+            sigCanvas.addEventListener('touchmove', draw, false);
+            sigCanvas.addEventListener('touchend', draw, false);
+            // prevent elastic scrolling
+            sigCanvas.addEventListener('touchmove', function(event) {
+                // if (event.changedTouches[0].pageY < 0) {
+                    // console.log("hi");
+                    event.preventDefault();
+                    // document.dispatchEvent(new Event('touchend'));
+                // }
+            }, false);
+        }
+        else {
+            // start drawing when the mousedown event fires, and attach handlers to
+            // draw a line to wherever the mouse moves to
+            $(sigCanvas).mousedown(function(mouseEvent) {
+                // save current trajectory
+                autoSave(sigCanvas);
+
+                let position = getPosition(mouseEvent, sigCanvas);
+                context.moveTo(position.X, position.Y);
+                context.beginPath();
+
+                // attach event handlers
+                $(this).mousemove(function(mouseEvent) {
+                    drawLine(mouseEvent, sigCanvas, context);
+                }).mouseup(function(mouseEvent) {
+                    finishDrawing(mouseEvent, sigCanvas, context);
+                }).mouseout(function(mouseEvent) {
+                    finishDrawing(mouseEvent, sigCanvas, context);
+                });
+            });
+        }
+    }
+
+
+    function imgChange(imagePath) {
+        var c = document.getElementById("drawCanvas");
+        var ctx = c.getContext("2d");
+        var img = new Image();
+        img.onload = function(){
+              ctx.drawImage(img, 0, 0, c.width, c.height);
+        };
+        img.src = imagePath;
+    }
+
+    // works out the X, Y position of the click inside the canvas from the X, Y position on the page
+    function getPosition(mouseEvent, canvas) {
+        let rect = canvas.getBoundingClientRect();
+        return {
+            X: mouseEvent.clientX - rect.left,
+            Y: mouseEvent.clientY - rect.top
+        };
+    }
+
+    function autoSave(canvas) {
+        canvas.src = canvas.toDataURL("image/jpeg");
+        canvas.style.display = "inline";
+    }
+
+    // draws a line to the x and y coordinates of the mouse event inside
+    // the specified element using the specified context
+    function drawLine(mouseEvent, canvas, context) {
+        let position = getPosition(mouseEvent, canvas);
+        context.lineTo(position.X, position.Y);
+        context.stroke();
+    }
+
+    // draws a line from the last coordiantes in the path to the finishing
+    // coordinates and unbind any event handlers which need to be preceded
+    // by the mouse down event
+    function finishDrawing(mouseEvent, canvas, context) {
+        // draw the line to the finishing coordinates
+        drawLine(mouseEvent, canvas, context);
+        context.closePath();
+        // // draw cluster image
+        // drawInduction(canvas, context);
+        if(n_drawings > n_triggerdraw){
+            generateDesign(epoch_id);
+        }
+        n_drawings += 1
+        // unbind any events which could draw
+        $(canvas).unbind("mousemove")
+            .unbind("mouseup")
+            .unbind("mouseout");
+    }
+
+    function dataUrlToFile(dataurl) {
+        let arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)[1],
+            bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
+        while(n--){
+            u8arr[n] = bstr.charCodeAt(n);
+        }
+        return new File([u8arr], {type:mime});
+    }
+
+</script>
+
+
+</body>
+</html>
+
+

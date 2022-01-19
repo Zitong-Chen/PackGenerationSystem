@@ -1,0 +1,13 @@
+{
+	"\u9ed1\u8272": {"LowerBound": {"Hue": 0, "Saturation": 0, "Value": 0}, "UpperBound": {"Hue": 180, "Saturation": 255, "Value": 60}}, 
+	"\u7070\u8272": {"LowerBound": {"Hue": 0, "Saturation": 0, "Value": 60}, "UpperBound": {"Hue": 180, "Saturation": 15, "Value": 220}}, 
+	"\u767d\u8272": {"LowerBound": {"Hue": 0, "Saturation": 0, "Value": 221}, "UpperBound": {"Hue": 180, "Saturation": 30, "Value": 255}}, 
+	"\u7ea2\u8272": {"LowerBound": {"Hue": 0, "Saturation": 15, "Value": 60}, "UpperBound": {"Hue": 10, "Saturation": 255, "Value": 255}}, 
+	"\u7ea2\u8272": {"LowerBound": {"Hue": 156, "Saturation": 15, "Value": 60}, "UpperBound": {"Hue": 180, "Saturation": 255, "Value": 255}}, 
+	"\u6a59\u8272": {"LowerBound": {"Hue": 11, "Saturation": 15, "Value": 60}, "UpperBound": {"Hue": 25, "Saturation": 255, "Value": 255}}, 
+	"\u9ec4\u8272": {"LowerBound": {"Hue": 26, "Saturation": 15, "Value": 60}, "UpperBound": {"Hue": 34, "Saturation": 255, "Value": 255}}, 
+	"\u7eff\u8272": {"LowerBound": {"Hue": 35, "Saturation": 15, "Value": 60}, "UpperBound": {"Hue": 77, "Saturation": 255, "Value": 255}}, 
+	"\u9752\u8272": {"LowerBound": {"Hue": 78, "Saturation": 15, "Value": 60}, "UpperBound": {"Hue": 99, "Saturation": 255, "Value": 255}}, 
+	"\u84dd\u8272": {"LowerBound": {"Hue": 100, "Saturation": 15, "Value": 60}, "UpperBound": {"Hue": 124, "Saturation": 255, "Value": 255}}, 
+	"\u7d2b\u8272": {"LowerBound": {"Hue": 125, "Saturation": 15, "Value": 60}, "UpperBound": {"Hue": 155, "Saturation": 255, "Value": 255}}
+}
