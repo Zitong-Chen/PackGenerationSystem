@@ -15,6 +15,9 @@ export default class ControlSlider extends Component {
     this.setState({
       value: value,
     })
+    if (this.props.handleChangeValue) {
+      this.props.handleChangeValue(value);
+    }
   }
 
   render() {

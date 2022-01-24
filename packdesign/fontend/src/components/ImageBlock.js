@@ -37,8 +37,9 @@ class ImageBlock extends Component {
         return (
             <div style={{display:'flex', flexDirection:'column'}}
                 onMouseEnter={this.handleOnMouseEnter}
-                onMouseLeave={this.handleOnMouseLeave}>
-                <div className='img-block'>
+                onMouseLeave={this.handleOnMouseLeave}
+                onClick={this.props.onClick}>
+                <div className='img-block' style={this.props.style}>
                     <img src={this.props.img}/>
                     { this.state.isPromptHover && this.state.isHover &&
                         <div className='hover-text' style={{left:`${this.state.left}`, top:`${this.state.top}`}}>

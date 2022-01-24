@@ -10,25 +10,106 @@ import ImageBlock from './components/ImageBlock'
 import './StyleTab.css'
 
 import CameraIcon from './icons/camera.png'
+import BlackIcon from './icons/black.jpg'
+
 
 // import styled from 'styled-components';
 
 
 /* ============ Upload Component ============== */
 class UploadComponent extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            readyUpload: false,
+            uploaded: false,
+            upload_file: null,
+            target_file: null,
+        }
+        this.input = React.createRef();
+    }
+
+    handleOnClick = () => {
+        this.input.current.click();
+    }
+
+    handleOnChange = (event) => {
+        let files = event.target.files;
+        if (files.length === 1) {
+            this.setState({
+                readyUpload: true,
+                upload_file: files[0].name,
+                target_file: files[0]
+            });
+        }
+    }
+
+    handleUpload = () => {
+        console.log('Start to upload img...');
+        let xhr = new XMLHttpRequest(); 
+        let form = new FormData();
+        form.append('file', this.state.target_file);
+        xhr.onreadystatechange = () => {
+            // 根据服务器的响应内容格式处理响应结果
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                if(xhr.getResponseHeader('content-type')==='application/json'){
+                    let data = JSON.parse(xhr.responseText);
+                    this.setState({
+                        upload_img: data.img,
+                    }, this.setUploadState(true)); 
+                }
+            }
+            else {
+                // console.log(xhr.responseText);
+            }
+        }
+        xhr.open('POST', '/upload', true);
+        xhr.send(form); 
+    }
+
+    setUploadState = (uploadState) => {
+        this.setState({
+            uploaded: uploadState
+        })
+    }
+
     render() {
         return (
-            <div className='upload-box' 
-            style={{height:this.props.height, 
-            width:this.props.width, 
-            borderWidth:this.props.borderWidth,
-            borderStyle:this.props.borderStyle,
-            color:this.props.textColor,
-            }}
-            onClick={this.props.onClick}>
-                <img src={this.props.icon}/>
-                <span>{this.props.text}</span>
+            <div style={{display:'flex', flexDirection:'column', 
+            alignItems:'center',width:`${this.props.width}`}}>
+                <div>
+                    <input type='file' accept='.jpg,.png,.jpge' multiple={false} style={{opacity:0}}
+                    width='100%' ref={this.input} onChange={this.handleOnChange}></input>
+                </div>
+                <div className='upload-box' 
+                    style={{height:this.props.height, 
+                    borderWidth:this.props.borderWidth,
+                    borderStyle:this.props.borderStyle,
+                    color:this.props.textColor,
+                    }}
+                    onClick={this.handleOnClick}>
+                    <img src={this.props.icon}/>
+                    <span>{this.props.text}</span>
+                </div>
+                {   this.state.readyUpload && 
+                    <div style={{width:'100%'}}>
+                        <div className='upload-info'>
+                            <span className='file-name'>{this.state.upload_file}</span>
+                            <span className='upload-btn' onClick={this.handleUpload}>上传</span>
+                        </div>
+                        <div className='upload-preview' style={{marginTop:'15px', display:'flex', justifyContent:'center'}}>
+                        </div>
+                    </div>
+                }
+                {
+                    this.state.uploaded &&
+                    <div style={{display:'flex', justifyContent:'right', width:'100%'}}>
+                        <ImageBlock title='上传图片' prompt='点击预览效果' img={this.state.upload_img} 
+                        onClick={() => this.props.onImageClick(this.state.upload_img)}/>
+                    </div>
+                }
             </div>
+            
         );
     }
 }
@@ -109,6 +190,19 @@ class TabContent extends Component {
 }
 
 class StyleTab extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            style: 1,
+            style_imgs: [],
+            R: 0,
+            G: 0,
+            B: 0,
+            color_img: BlackIcon,
+            upload_img: CameraIcon,
+        };
+    }
+
     generateDesign = style => {
         console.log('Start to generate style imgs...');
         let xhr = new XMLHttpRequest(); 
@@ -118,15 +212,46 @@ class StyleTab extends Component {
                 if(xhr.getResponseHeader('content-type')==='application/json'){
                     var res_imgs = [];
                     let data = JSON.parse(xhr.responseText);
-                    let imgs = data.img;
+                    let status = data.status;
+                    if (status) {
+                        let imgs = data.img;
+                        let base_dir = data.base_dir;
+
+                        for(let i = 0; i < imgs.length; ++i) {
+                            res_imgs.push(base_dir+imgs[i]);
+                        }
+                        this.setState({
+                            style:style,
+                            style_imgs:res_imgs,
+                        }); 
+                    }
+                }
+            }
+            else {
+                // console.log(xhr.responseText);
+            }
+        }
+        xhr.open('GET', '/generate/style='+style, true);
+        xhr.send(null);   
+    }
+
+    generateColorImg = () => {
+        console.log('Start to generate single color img...');
+        let xhr = new XMLHttpRequest(); 
+        let form = new FormData();
+        form.append('R', this.state.R);
+        form.append('G', this.state.G);
+        form.append('B', this.state.B);
+        xhr.onreadystatechange = () => {
+            // 根据服务器的响应内容格式处理响应结果
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                if(xhr.getResponseHeader('content-type')==='application/json'){
+                    let data = JSON.parse(xhr.responseText);
+                    let img = data.img;
                     let base_dir = data.base_dir;
 
-                    for(let i = 0; i < imgs.length; ++i) {
-                        res_imgs.push(base_dir+imgs[i]);
-                    }
                     this.setState({
-                        style:style,
-                        style_imgs:res_imgs,
+                        color_img: base_dir+img,
                     }); 
                 }
             }
@@ -134,17 +259,48 @@ class StyleTab extends Component {
                 // console.log(xhr.responseText);
             }
         }
-        xhr.open('GET', '/generate', true);
-        xhr.send(null);   
+        xhr.open('POST', '/single-color', true);
+        xhr.send(form);   
         console.log(this.state);
     }
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            style: 1,
-            style_imgs: ['./icons/camera.png'],
-        };
+    handleChange_R = (new_R) => {
+        console.log("New R:", new_R);
+        this.setState({
+            R: new_R,
+        }, () => {
+            console.log("New State:", this.state);
+            this.props.model.single_color_R = new_R;
+            this.generateColorImg();
+        });
+    }
+
+    handleChange_G = (new_G) => {
+        this.setState({
+            G: new_G,
+        }, () => {
+            this.props.model.single_color_G = new_G;
+            this.generateColorImg();
+        });
+    }
+
+    handleChange_B = (new_B) => {
+        this.setState({
+            B: new_B,
+        }, () => {
+            this.props.model.single_color_B = new_B;
+            this.generateColorImg();
+        });
+    }
+
+    onImageClick = (new_img_src) => {
+        console.log("New Source:"+new_img_src);
+        this.props.model.img_src = new_img_src ;
+        this.props.onModelChange();
+    }
+
+    upload_img = () => {
+
     }
 
     render() {
@@ -153,19 +309,23 @@ class StyleTab extends Component {
                 <div label='纯色背景' textColor='white' tabName='color-style' className='color-style-control'>
                     <div style={{display:'flex', flexDirection:'column'}} >
                         <div className='r-channel'>
-                            {/* <span style={{color:'white'}}>R通道</span> */}
-                            <ControlSlider min={0} max={255} color='white' title='R通道' percentage={false}/>
+                            <ControlSlider min={0} max={255} color='white' title='R通道' 
+                            percentage={false} handleChangeValue={this.handleChange_R}/>
 
                         </div>
                         <div className='g-channel'>
-                            {/* <span style={{color:'white'}}>G通道</span> */}
-                            <ControlSlider min={0} max={255} color='white' title='G通道' percentage={false}/>
+                            <ControlSlider min={0} max={255} color='white' title='G通道' 
+                            percentage={false}  handleChangeValue={this.handleChange_G}/>
 
                         </div>
                         <div className='b-channel'>
-                            {/* <span style={{color:'white'}}>B通道</span> */}
-                            <ControlSlider min={0} max={255} color='white' title='B通道' percentage={false}/>
-
+                            <ControlSlider min={0} max={255} color='white' title='B通道' 
+                            percentage={false}  handleChangeValue={this.handleChange_B}/>
+                        </div>
+                        <div className='color-preview' style={{marginTop:'15px', marginRight:'20px', 
+                        display:'flex', justifyContent:'right'}}>
+                            <ImageBlock title='纯色图片' prompt='点击预览效果' img={this.state.color_img} 
+                            onClick={() => this.onImageClick(this.state.color_img)}/>
                         </div>
                     </div>
                 </div>
@@ -175,15 +335,16 @@ class StyleTab extends Component {
                         
                             <span style={{color:'white'}}>风格选择</span>
                             <div className='style-btns'>
-                                <StyleBtn value='风格1' textColor='white' backgroundColor='#1d3068' onClick={()=>this.generateDesign(1)}/>
-                                <StyleBtn value='风格2' textColor='white' backgroundColor='#1d3068' onClick={()=>this.generateDesign(2)} />
+                                <StyleBtn value='渲染' textColor='white' backgroundColor='#1d3068' onClick={()=>this.generateDesign(1)}/>
+                                <StyleBtn value='抽象' textColor='white' backgroundColor='#1d3068' onClick={()=>this.generateDesign(2)} />
 
                             </div>
                             <div className='style-generate'>
                                 <div className='generate-img-block' >
                                     {
                                     this.state.style_imgs.map((style_img, index) => {
-                                        return <ImageBlock key={index} img={style_img} title='text' prompt='text2'/>
+                                        return <ImageBlock key={index} img={style_img} title={'生成图片'+(index+1)} 
+                                        prompt='点击预览效果' onClick={() => this.onImageClick(style_img)}/>
                                     })
                                     }
                                 </div>
@@ -206,7 +367,7 @@ class StyleTab extends Component {
                 <div label='本地上传' textColor='white' tabName='upload-style' className='upload-style-control'>
                     <UploadComponent icon={CameraIcon} text='点击上传照片' width='90%' 
                     height='100px' borderWidth='2px' borderStyle='dashed' textColor='white'
-                    onClick={() => {alert("upload img")}}/>
+                    onImageClick={this.onImageClick}/>
                 </div>
 
             </TabContent>

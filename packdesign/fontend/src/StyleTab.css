@@ -74,8 +74,8 @@
     display: flex;
     flex-direction: column;
 
-    align-content: center;
-    justify-content: center;
+    align-items: center;
+    justify-items: center;
 }
 
 /* ============ TabContent: GAN Styles ================= */
@@ -156,7 +156,7 @@
     border-width: 2px;
 
     height: 100px;
-    width: 90%;
+    width: 100%;
 
     cursor: pointer;
 }
@@ -168,4 +168,29 @@
 
 .upload-box span {
     margin-left: 20px;
+}
+
+.upload-info {
+    height: 40px;
+    width: 100%;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    color: white;
+}
+
+.upload-info .file-name {
+    font-size: 12px;
+    color: white;
+    overflow: hidden;
+}
+
+.upload-info .upload-btn {
+    text-align: center;
+    font-size: 12px;
+    
+    text-decoration: underline;
+    cursor: pointer;
 }

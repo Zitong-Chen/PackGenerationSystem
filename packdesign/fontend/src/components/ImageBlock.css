@@ -1,22 +1,22 @@
 .img-block {
-    border-radius: 5px;
     margin: 2px;
 
-    height: 75px;
-    width: 75px;
+    height: 80px;
+    width: 80px;
 }
 
 .img-block img {
     width: 100%;
     height: 100%;
+    border-radius: 5px;
 }
 
 .hover-text {
     display: flex;
     flex-direction: column;
 
-    height: 75px;
-    width: 75px;
+    height: 80px;
+    width: 80px;
     border-radius: 5px;
     margin: 2px;
 
@@ -30,7 +30,7 @@
 .hover-text .title {
     /* border-radius: 5px; */
     margin: 5px;
-    font-size: 14px;
+    font-size: 13px;
     color: rgb(5, 5, 5);
 }
 

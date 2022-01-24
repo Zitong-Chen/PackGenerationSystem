@@ -78,13 +78,16 @@ class TabContent extends Component {
 }
 
 class OptionTabs extends Component {
-
+    constructor(props) {
+        super(props);
+                                                                                                                                                                                                                                                    
+    }
     render() {
         return (
             <TabContent>
 
                 <div icon={PicIcon} label='风格' textColor='white' tabName='console-style' >
-                    <StyleTab />
+                    <StyleTab model={this.props.model} onModelChange={this.props.onModelChange}/>
                 </div>
 
                 <div icon={StarIcon} label='主页' textColor='white' tabName='console-main'>

@@ -7,6 +7,6 @@
 
 .img-container img{
     margin: 10px;
-    height: fit-content;
-    width: fit-content;
+    height: 60%;
+    /* width: 60%; */
 }

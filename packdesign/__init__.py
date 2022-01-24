@@ -11,6 +11,7 @@ import base64
 from numpy.core.fromnumeric import prod, size
 from numpy.core.numeric import full
 import torch
+from torch import argsort
 from werkzeug.utils import secure_filename
 import time
 
@@ -63,11 +64,8 @@ def create_app(test_config=None):
     # sample page
     @app.route('/')
     def get_home():
-        return redirect(url_for('show_index'), code=301)
-
-    @app.route('/index')
-    def show_index():
         session['user'] = int(time.time())
+        # session['user_data'] = UserModel() 
         base_path = os.path.join(app.static_folder, app.config[USER_DATA_KEY])
         user_path = os.path.join(base_path, str(session.get(USER_SESSION)))
         os.makedirs(os.path.join(user_path, app.config[GENERATE_IMG_KEY]), exist_ok=True)
@@ -75,8 +73,11 @@ def create_app(test_config=None):
         os.makedirs(os.path.join(user_path, app.config[COLOR_IMG_KEY]), exist_ok=True)
         os.makedirs(os.path.join(user_path, app.config[RENDER_IMG]), exist_ok=True)
 
-        
-        return render_template('index1.html')
+        return redirect(url_for('show_index'), code=301)
+
+    @app.route('/index')
+    def show_index():
+        return render_template('index.html')
     
     @app.route('/materials', methods=['GET', 'POST'])
     def get_random_materials():
@@ -126,8 +127,8 @@ def create_app(test_config=None):
             
             
 
-    @app.route('/generate', methods=['GET', 'POST'])
-    def generate_background():
+    @app.route('/generate/style=<int:style>', methods=['GET', 'POST'])
+    def generate_background(style):
         if request.method == 'GET':
             # get storge path
             user_path = os.path.join(app.config[USER_DATA_KEY], str(session.get(USER_SESSION)))
@@ -137,14 +138,19 @@ def create_app(test_config=None):
             if not os.path.exists(full_gen_path):
                 os.makedirs(full_gen_path, exist_ok=True)
 
-            t = int(time.time())
-            img_list = []
-            count = 0
-            # generate style labels and noise
-            target_styles = utils.STYLES
-            model_path = '/home/zitong/ThesisSystem/packdesign/static1'
-            for style in target_styles:
-                gen_imgs = utils.generate_image(style, model_path, nums=3)
+            print(request)
+            style_index = style
+            print(style_index)
+
+            if style_index < len(utils.STYLES):
+                t = int(time.time())
+                img_list = []
+                count = 0
+                # generate style labels and noise
+                target_style = utils.STYLES[style_index]
+                model_path = '/home/zitong/ThesisSystem/packdesign/static'
+                
+                gen_imgs = utils.generate_image(target_style, model_path, nums=9)
                 for img in gen_imgs:
                     img = cv2.cvtColor(img, cv2.COLOR_RGB2BGR)
                     cv2.imwrite(os.path.join(full_gen_path, "{}-{}.jpg".format(str(count), str(int(t)))), img)
@@ -155,8 +161,11 @@ def create_app(test_config=None):
                     # img_list.append(image_base64)
                     img_list.append(img_url)
                     count+=1
-            
-            data = {"status": True, "img": img_list, "base_dir": os.path.join('static', gen_path) + '/' }
+                
+                data = {"status": True, "img": img_list, "base_dir": os.path.join('static', gen_path) + '/' }
+            else:
+                data = {"status": False}
+
             return jsonify(**data)
     
     @app.route('/template', methods=['GET', 'POST'])
@@ -240,8 +249,11 @@ def create_app(test_config=None):
                 # base64_img = utils.pil_base64(pil_img)
                 # # image_base64 = "data:image/jpeg;base64," + str(base64.b64encode(image), encoding='utf-8')
                 image_base64 = "data:image/jpeg;base64," + str(base64_img, encoding='utf-8')
-                data = {"status": True, "img": image_base64}
+                data = {"status": True, "img": image_base64, "url": os.path.join(app.static_folder, filename)}
                 return jsonify(**data)
+        else:
+            data = {"status": False}
+            return jsonify(**data) 
     
     @app.route('/color-decision', methods=['GET', 'POST'])
     def generate_textcolor():
