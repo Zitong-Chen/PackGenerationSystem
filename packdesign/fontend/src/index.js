@@ -23,7 +23,7 @@ function OptionHead(props) {
     <div className='option-header'>
       {/* <img src={img} onClick={() => click()} />
       <img src={img} /> */}
-      <img src={BoxIcon}></img>
+      <img src={BoxIcon} style={{marginRight:'5px'}} draggable={false}></img>
       <span>智绘包装</span>
     </div>
   );
@@ -64,17 +64,34 @@ class DisplayContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      img_src: MagicIcon,
+      img_src: null,
     }
-    console.log(this.state)
   }
 
   update() {   
-    this.setState({
-      img_src: this.props.model.img_src,
-    });
-    console.log(this.props.model)
-    // this.forceUpdate();
+    console.log('Start to render img...');
+    let xhr = new XMLHttpRequest(); 
+    let form = new FormData();
+    form.append('image', this.props.model.img_src);
+    xhr.onreadystatechange = () => {
+        // 根据服务器的响应内容格式处理响应结果
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            if(xhr.getResponseHeader('content-type')==='application/json'){
+                let data = JSON.parse(xhr.responseText);
+                let img = data.img[0];
+                let base_dir = data.base_dir;
+                console.log(base_dir+img)
+                this.setState({
+                  img_src: base_dir+img,
+                });
+            }
+        }
+        else {
+            // console.log(xhr.responseText);
+        }
+    }
+    xhr.open('POST', '/render', false);
+    xhr.send(form); 
   }
 
   render() {
@@ -121,7 +138,7 @@ class Body extends Component {
 
 const userModel = new UserModel();
 // userModel.isExist = true;
-userModel.img_src = ''
+userModel.img_src = 'static/black.jpg'
 
 ReactDOM.render(
   <Body model={userModel}/>,

@@ -55,7 +55,7 @@ class UploadComponent extends Component {
                 if(xhr.getResponseHeader('content-type')==='application/json'){
                     let data = JSON.parse(xhr.responseText);
                     this.setState({
-                        upload_img: data.img,
+                        upload_img: data.url,
                     }, this.setUploadState(true)); 
                 }
             }
@@ -195,10 +195,11 @@ class StyleTab extends Component {
         this.state = {
             style: 1,
             style_imgs: [],
+            new_color:false,
             R: 0,
             G: 0,
             B: 0,
-            color_img: BlackIcon,
+            color_img: 'static/black.jpg',
             upload_img: CameraIcon,
         };
     }
@@ -297,10 +298,6 @@ class StyleTab extends Component {
         console.log("New Source:"+new_img_src);
         this.props.model.img_src = new_img_src ;
         this.props.onModelChange();
-    }
-
-    upload_img = () => {
-
     }
 
     render() {

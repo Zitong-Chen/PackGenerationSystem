@@ -36,7 +36,7 @@ RENDER_IMG = "RENDER_IMG"
 RENDER_MODEL = "RENDER_MODEL"
 
 def create_app(test_config=None):
-    app = Flask(__name__, instance_relative_config=True, static_folder='fontend/static')
+    app = Flask(__name__, instance_relative_config=True, static_folder='static')
     app.config.from_mapping(
         SECRET_KEY='dev',
         USER_DATA='user_data',
@@ -148,7 +148,7 @@ def create_app(test_config=None):
                 count = 0
                 # generate style labels and noise
                 target_style = utils.STYLES[style_index]
-                model_path = '/home/zitong/ThesisSystem/packdesign/static'
+                model_path = app.static_folder
                 
                 gen_imgs = utils.generate_image(target_style, model_path, nums=9)
                 for img in gen_imgs:
@@ -249,7 +249,7 @@ def create_app(test_config=None):
                 # base64_img = utils.pil_base64(pil_img)
                 # # image_base64 = "data:image/jpeg;base64," + str(base64.b64encode(image), encoding='utf-8')
                 image_base64 = "data:image/jpeg;base64," + str(base64_img, encoding='utf-8')
-                data = {"status": True, "img": image_base64, "url": os.path.join(app.static_folder, filename)}
+                data = {"status": True, "img": image_base64, "url": os.path.join('static', filename)}
                 return jsonify(**data)
         else:
             data = {"status": False}

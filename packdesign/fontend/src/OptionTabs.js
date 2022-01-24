@@ -13,6 +13,8 @@ import StyleIcon from './icons/icon-style.png'
 import TempIcon from './icons/icon-temp.png'
 import PicIcon from './icons/icon-pic.png'
 import ColorIcon from './icons/icon-color.png'
+import PenIcon from './icons/icon-pen.png'
+
 
 /* ============ Tab Buttons ================= */
 class TabBtn extends Component {
@@ -86,13 +88,8 @@ class OptionTabs extends Component {
         return (
             <TabContent>
 
-                <div icon={PicIcon} label='风格' textColor='white' tabName='console-style' >
+                <div icon={StarIcon} label='风格' textColor='white' tabName='console-style' >
                     <StyleTab model={this.props.model} onModelChange={this.props.onModelChange}/>
-                </div>
-
-                <div icon={StarIcon} label='主页' textColor='white' tabName='console-main'>
-                    <Slider />
-                    <input />
                 </div>
 
                 <div icon={TempIcon} label='样机' textColor='white' tabName='console-temp'>
@@ -102,11 +99,15 @@ class OptionTabs extends Component {
                     </div>
                 </div>
                 
-                <div icon={StyleIcon} label='布局' textColor='white' tabName='console-layout'>
+                <div icon={StyleIcon} label='模版' textColor='white' tabName='console-layout'>
                     <div>Tab 3</div>
                 </div>
 
-                <div icon={ColorIcon} label='配色' textColor='white' tabName='console-color'>
+                <div icon={PicIcon} label='素材' textColor='white' tabName='console-material'>
+                    <div>Tab 4</div>
+                </div>
+
+                <div icon={PenIcon} label='文字' textColor='white' tabName='console-color'>
                     <div>Hello World</div>
                 </div>
             </TabContent>
