@@ -6,7 +6,8 @@ import PropTypes from 'prop-types';
 
 import ControlSlider from './components/rc-slider';
 
-import ImageBlock from './components/ImageBlock'
+import ImageBlock from './components/ImageBlock';
+import UploadComponent from './components/UploadComponent';
 import './StyleTab.css'
 
 import CameraIcon from './icons/camera.png'
@@ -16,103 +17,7 @@ import BlackIcon from './icons/black.jpg'
 // import styled from 'styled-components';
 
 
-/* ============ Upload Component ============== */
-class UploadComponent extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            readyUpload: false,
-            uploaded: false,
-            upload_file: null,
-            target_file: null,
-        }
-        this.input = React.createRef();
-    }
 
-    handleOnClick = () => {
-        this.input.current.click();
-    }
-
-    handleOnChange = (event) => {
-        let files = event.target.files;
-        if (files.length === 1) {
-            this.setState({
-                readyUpload: true,
-                upload_file: files[0].name,
-                target_file: files[0]
-            });
-        }
-    }
-
-    handleUpload = () => {
-        console.log('Start to upload img...');
-        let xhr = new XMLHttpRequest(); 
-        let form = new FormData();
-        form.append('file', this.state.target_file);
-        xhr.onreadystatechange = () => {
-            // 根据服务器的响应内容格式处理响应结果
-            if (xhr.readyState === 4 && xhr.status === 200) {
-                if(xhr.getResponseHeader('content-type')==='application/json'){
-                    let data = JSON.parse(xhr.responseText);
-                    this.setState({
-                        upload_img: data.url,
-                    }, this.setUploadState(true)); 
-                }
-            }
-            else {
-                // console.log(xhr.responseText);
-            }
-        }
-        xhr.open('POST', '/upload', true);
-        xhr.send(form); 
-    }
-
-    setUploadState = (uploadState) => {
-        this.setState({
-            uploaded: uploadState
-        })
-    }
-
-    render() {
-        return (
-            <div style={{display:'flex', flexDirection:'column', 
-            alignItems:'center',width:`${this.props.width}`}}>
-                <div>
-                    <input type='file' accept='.jpg,.png,.jpge' multiple={false} style={{opacity:0}}
-                    width='100%' ref={this.input} onChange={this.handleOnChange}></input>
-                </div>
-                <div className='upload-box' 
-                    style={{height:this.props.height, 
-                    borderWidth:this.props.borderWidth,
-                    borderStyle:this.props.borderStyle,
-                    color:this.props.textColor,
-                    }}
-                    onClick={this.handleOnClick}>
-                    <img src={this.props.icon}/>
-                    <span>{this.props.text}</span>
-                </div>
-                {   this.state.readyUpload && 
-                    <div style={{width:'100%'}}>
-                        <div className='upload-info'>
-                            <span className='file-name'>{this.state.upload_file}</span>
-                            <span className='upload-btn' onClick={this.handleUpload}>上传</span>
-                        </div>
-                        <div className='upload-preview' style={{marginTop:'15px', display:'flex', justifyContent:'center'}}>
-                        </div>
-                    </div>
-                }
-                {
-                    this.state.uploaded &&
-                    <div style={{display:'flex', justifyContent:'right', width:'100%'}}>
-                        <ImageBlock title='上传图片' prompt='点击预览效果' img={this.state.upload_img} 
-                        onClick={() => this.props.onImageClick(this.state.upload_img)}/>
-                    </div>
-                }
-            </div>
-            
-        );
-    }
-}
 
 /* ============ Style Buttons ================= */
 class StyleBtn extends Component {
@@ -296,8 +201,17 @@ class StyleTab extends Component {
 
     onImageClick = (new_img_src) => {
         console.log("New Source:"+new_img_src);
+        this.props.model.select_background = new_img_src;
         this.props.model.img_src = new_img_src ;
         this.props.onModelChange();
+    }
+
+    handleUploadSuccess = (new_upload_img) => {
+        console.log(new_upload_img);
+        console.log("Before Upload:",this.props.model);
+
+        this.props.model.upload_img_url = new_upload_img;
+        console.log("After Upload:", this.props.model)
     }
 
     render() {
@@ -364,7 +278,8 @@ class StyleTab extends Component {
                 <div label='本地上传' textColor='white' tabName='upload-style' className='upload-style-control'>
                     <UploadComponent icon={CameraIcon} text='点击上传照片' width='90%' 
                     height='100px' borderWidth='2px' borderStyle='dashed' textColor='white'
-                    onImageClick={this.onImageClick}/>
+                    onPreviewImageClick={this.onImageClick} uploadUrl='/upload' preview={true} 
+                    onUploadSuccess={this.handleUploadSuccess}/>
                 </div>
 
             </TabContent>

@@ -14,6 +14,8 @@ import TempIcon from './icons/icon-temp.png'
 import PicIcon from './icons/icon-pic.png'
 import ColorIcon from './icons/icon-color.png'
 import PenIcon from './icons/icon-pen.png'
+import LayoutTab from './LayoutTab';
+import MaterialTab from './MaterialTab';
 
 
 /* ============ Tab Buttons ================= */
@@ -100,11 +102,11 @@ class OptionTabs extends Component {
                 </div>
                 
                 <div icon={StyleIcon} label='模版' textColor='white' tabName='console-layout'>
-                    <div>Tab 3</div>
+                    <LayoutTab model={this.props.model} onModelChange={this.props.onModelChange}/>
                 </div>
 
                 <div icon={PicIcon} label='素材' textColor='white' tabName='console-material'>
-                    <div>Tab 4</div>
+                    <MaterialTab model={this.props.model} onModelChange={this.props.onModelChange}/>
                 </div>
 
                 <div icon={PenIcon} label='文字' textColor='white' tabName='console-color'>

@@ -1,0 +1,67 @@
+.console-layout {
+    margin: 15px;
+
+    display: flex;
+    flex-direction: column;
+}
+
+/* Text Input */
+
+.text-input {
+    margin: 15px 0px;
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.text-input .title {
+    color: white;
+}
+
+.text-input input {
+    margin-top: 15px;
+
+    outline-style: none;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 7px;
+
+    font-size: 12px;
+}
+
+/* prod Input */
+
+.prod-input {
+    margin: 15px 0px;
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.prod-input .title {
+    color: white;
+}
+/* 
+.text-input input {
+    margin-top: 15px;
+
+    outline-style: none;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 7px;
+
+    font-size: 12px;
+} */
+
+
+/* save */
+
+.items-info {
+    color: white;
+}
+
+.items-info span {
+    margin-top: 10px;
+}

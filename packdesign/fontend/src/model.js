@@ -7,15 +7,25 @@ export default class UserModel {
 
     constructor() {
         this.back_style = {
-            select_style: 0,
+            select_background: 0,
             single_color: [0, 0, 0],
             gan_style: 0,
             gan_gen_result: [""],
             adjust_params: [0, 0, 0, 0],
             upload_img_url: "",
-
-            img_src:"",
         };
+
+        this.items = {
+            text: "",
+            prod_src: "",
+            template_result:[],
+            color_result:[]
+        }
+
+        this.design_setting = {
+            url: "",
+            // transport params
+        }
     }
 
     // get isExist() {
@@ -26,14 +36,13 @@ export default class UserModel {
     //     this.isExist = exist;
     // }
 
-    get select_style() {
-        return this.back_style.select_style;
+    // ===========background============
+    get select_background() {
+        return this.back_style.select_background;
     }
 
-    set select_style(selection) {
-        if (selection >= 0 && selection <= 2) {
-            this.back_style.select_style = selection;
-        } 
+    set select_background(selection) {
+        this.back_style.select_background = selection;
     }
 
     get single_color() {
@@ -104,13 +113,48 @@ export default class UserModel {
         this.back_style.upload_img_url = new_url;
     }
 
+    
+    // ===========text & prod============
+
+    get text() {
+        return this.items.text;
+    }
+
+    set text(new_text) {
+        this.items.text = new_text;
+    }
+
+    get prod_src() {
+        return this.items.prod_src;
+    }
+
+    set prod_src(new_prod) {
+        this.items.prod_src = new_prod;
+    }
+
+    get template_result() {
+        return this.items.template_result;
+    }
+
+    set template_result(new_temps) {
+        this.items.template_result = new_temps;
+    }
+
+    get color_result() {
+        return this.items.color_result;
+    }
+
+    set color_result(new_colors) {
+        this.items.color_result = new_colors;
+    }
+
+    // ===========design url============
+
     get img_src() {
-        return this.back_style.img_src;
+        return this.design_setting.url;
     }
 
     set img_src(new_src) {
-        this.back_style.img_src = new_src;
+        this.design_setting.url = new_src;
     }
-
-    
 }

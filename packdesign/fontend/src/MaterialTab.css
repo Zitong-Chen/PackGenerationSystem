@@ -1,0 +1,26 @@
+.console-material {
+    margin: 15px;
+
+    display: flex;
+    flex-direction: column;
+}
+
+/* Layout Generation */
+
+.layout-generation {
+    margin: 15px 0px;
+}
+
+.layout-generation span {
+    color: white;
+}
+
+/* Color Generation */
+
+.color-generation {
+    margin: 15px 0px;
+}
+
+.color-generation {
+    color: white;
+}
