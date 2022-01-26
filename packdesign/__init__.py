@@ -184,7 +184,8 @@ def create_app(test_config=None):
                 os.makedirs(full_temp_path, exist_ok=True)
             
             # TODO:replace different prefix for different format
-            prod = request.form.get('prodBase64').split(',')[-1]
+            prod = request.form.get('prodBase64')
+
             # backimg = cv2.imread(os.path.join(app.static_folder, backurl))
 
             # get back img
@@ -194,6 +195,7 @@ def create_app(test_config=None):
             back_path = os.path.join(app.static_folder, back_file)
 
             if prod is not None and len(prod) != 0:
+                prod = request.form.get('prodBase64').split(',')[-1]
                 prod = utils.base64_cv2(prod)
             else:
                 prod = None

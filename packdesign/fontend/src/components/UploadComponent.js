@@ -43,6 +43,7 @@ class UploadComponent extends Component {
                     let data = JSON.parse(xhr.responseText);
                     this.setState({
                         upload_img: data.url,
+                        upload_img_src: data.img,
                     }, () => this.setUploadState(true)); 
                 }
             }
@@ -60,7 +61,7 @@ class UploadComponent extends Component {
         })
         if (this.props.onUploadSuccess) {
             console.log(this.state.upload_img);
-            this.props.onUploadSuccess(this.state.upload_img);
+            this.props.onUploadSuccess(this.state.upload_img, this.state.upload_img_src);
         }
     }
 

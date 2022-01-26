@@ -17,9 +17,11 @@ export default class UserModel {
 
         this.items = {
             text: "",
+            prod_url: "",
             prod_src: "",
             template_result:[],
-            color_result:[]
+            color_result:[],
+            select_template: ""
         }
 
         this.design_setting = {
@@ -124,6 +126,14 @@ export default class UserModel {
         this.items.text = new_text;
     }
 
+    get prod_url() {
+        return this.items.prod_url;
+    }
+
+    set prod_url(new_prod_url) {
+        this.items.prod_url = new_prod_url;
+    }
+
     get prod_src() {
         return this.items.prod_src;
     }
@@ -146,6 +156,14 @@ export default class UserModel {
 
     set color_result(new_colors) {
         this.items.color_result = new_colors;
+    }
+
+    get select_template() {
+        return this.items.select_template;
+    }
+
+    set select_template(new_template) {
+        this.items.select_template = new_template;
     }
 
     // ===========design url============

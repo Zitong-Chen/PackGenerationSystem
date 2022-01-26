@@ -15,7 +15,7 @@ class LayoutTab extends Component {
         this.state = {
             text: "",
             text_valid: false,
-            prod: this.props.model.prod_src,
+            prod: this.props.model.prod_url,
         }
     }
 
@@ -33,12 +33,12 @@ class LayoutTab extends Component {
         };
     }
 
-    handleUploadSuccess = (new_img) => {
-        console.log('prod')
+    handleUploadSuccess = (new_img_url, new_img_src) => {
         this.setState({
-            prod: new_img,
+            prod: new_img_url,
         })
-        this.props.model.prod_src = new_img;
+        this.props.model.prod_src = new_img_src;
+        this.props.model.prod_url = new_img_url;
     }
 
     saveText = () => {
@@ -72,7 +72,7 @@ class LayoutTab extends Component {
                         height='100px' borderWidth='2px' borderStyle='dashed' textColor='white'
                         uploadUrl='/upload' preview={false} onUploadSuccess={this.handleUploadSuccess}/>
                     <span style={{marginTop:'2px', fontSize:'10px', color:'white',
-                        display: this.state.prod === ""? 'none' : ''}}>上传成功！</span>
+                        display: this.state.prod === "" ? 'none' : ''}}>上传成功！</span>
                     </div>
                     
                 </div>
@@ -86,7 +86,7 @@ class LayoutTab extends Component {
                 <div className='items-info' style={{display:'flex', flexDirection:'column'}}>
                     <span>素材信息</span>
                     <span style={{fontSize:'12px'}}>短文字：{this.props.model.text}</span>
-                    <span style={{fontSize:'12px'}}>产品图：{this.props.model.prod_src.split('/')[1]}</span>
+                    <span style={{fontSize:'12px'}}>产品图：{this.props.model.prod_url}</span>
                 </div>
             </div>
         );

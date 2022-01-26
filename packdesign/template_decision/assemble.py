@@ -201,8 +201,8 @@ def combine_templates(f, text, prod=None):
 def sort_templates(f_list:List, base_dir):
     scores = []
     for f in f_list:
-        temp_score = visual_clutter.get_feature_congestion(os.path.join(base_dir, f))
-        # temp_score = randint(0,10)
+        # temp_score = visual_clutter.get_feature_congestion(os.path.join(base_dir, f))
+        temp_score = randint(0,10)
         scores.append((f, temp_score))
     scores.sort(key=lambda x: x[1], reverse=True)
     template_list = [item[0] for item in scores]
