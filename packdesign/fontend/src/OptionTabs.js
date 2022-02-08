@@ -90,28 +90,28 @@ class OptionTabs extends Component {
         return (
             <TabContent>
 
-                <div icon={StarIcon} label='风格' textColor='white' tabName='console-style' >
-                    <StyleTab model={this.props.model} onModelChange={this.props.onModelChange}/>
-                </div>
-
-                <div icon={TempIcon} label='样机' textColor='white' tabName='console-temp'>
+                {/* <div icon={TempIcon} label='样机' textColor='white' tabName='console-temp'>
                     <div style={{display:'flex', flexDirection:'row'}}>
                         <ImageBlock img={img} title='Block1' prompt='undifine'/>
                         <ImageBlock img={img} title='Block2' prompt='undifine' isPromptHover={false}/>
                     </div>
-                </div>
+                </div> */}
                 
-                <div icon={StyleIcon} label='模版' textColor='white' tabName='console-layout'>
+                <div icon={StarIcon} label='主页' textColor='white' tabName='console-layout'>
                     <LayoutTab model={this.props.model} onModelChange={this.props.onModelChange}/>
                 </div>
 
-                <div icon={PicIcon} label='素材' textColor='white' tabName='console-material'>
+                <div icon={StyleIcon} label='风格' textColor='white' tabName='console-style' >
+                    <StyleTab model={this.props.model} onModelChange={this.props.onModelChange}/>
+                </div>
+
+                <div icon={PicIcon} label='调整' textColor='white' tabName='console-material'>
                     <MaterialTab model={this.props.model} onModelChange={this.props.onModelChange}/>
                 </div>
 
-                <div icon={PenIcon} label='文字' textColor='white' tabName='console-color'>
+                {/* <div icon={PenIcon} label='文字' textColor='white' tabName='console-color'>
                     <div>Hello World</div>
-                </div>
+                </div> */}
             </TabContent>
         );
     }
