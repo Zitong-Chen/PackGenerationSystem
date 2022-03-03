@@ -1,8 +1,8 @@
 .img-block {
-    margin: 2px;
+    margin: 3px;
 
-    height: 80px;
-    width: 80px;
+    height: 90px;
+    width: 90px;
 }
 
 .img-block img {
@@ -14,9 +14,10 @@
 .hover-text {
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
 
-    height: 80px;
-    width: 80px;
+    height: 90px;
+    width: 90px;
     border-radius: 5px;
     margin: 2px;
 

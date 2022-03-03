@@ -128,7 +128,8 @@ class MaterialTab extends Component {
         return (
             <div className='console-material'>
                 <div className='layout-generation'>
-                    <div style={{display: 'flex', flexDirection:'row', justifyContent:'space-between', alignContent:'center'}}>
+                    <div style={{display: 'flex', flexDirection:'row', 
+                    justifyContent:'space-between', alignContent:'center', marginBottom: '10px'}}>
                     <span>排版布局</span>
                     <span style={{textDecoration:'underline', fontSize:'12px', cursor:'pointer'}}
                     onClick={this.handleOnLayoutGeneration}>生成排版</span>
@@ -147,7 +148,8 @@ class MaterialTab extends Component {
                             margin:"10px 0px"}}></div>
 
                 <div className='color-generation'>
-                    <div style={{display: 'flex', flexDirection:'row', justifyContent:'space-between', alignContent:'center'}}>
+                    <div style={{display: 'flex', flexDirection:'row', justifyContent:'space-between',
+                    alignContent:'center', marginBottom: '10px'}}>
                         <span>文字配色</span>
                         <span style={{textDecoration:'underline', fontSize:'12px', cursor:'pointer'}}
                         onClick={this.handleOnColorGeneration}>生成配色</span>
@@ -155,7 +157,7 @@ class MaterialTab extends Component {
                     <div className='color-result'>
                         {this.state.color_res.map((color_img, index) => {
                             return <ImageBlock key={index} img={color_img} title={'配色'+(index+1)} 
-                            prompt='点击预览效果' onClick={() => this.handleOnColorGeneration(color_img)}/>
+                            prompt='点击预览效果' onClick={() => this.handleOnColorClick(color_img)}/>
                         })}
                     </div>
                 </div>

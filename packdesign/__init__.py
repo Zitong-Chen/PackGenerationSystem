@@ -107,6 +107,9 @@ def create_app(test_config=None):
             gen_path = os.path.join(user_path, app.config[GENERATE_IMG_KEY])
             full_gen_path = os.path.join(app.static_folder, gen_path)
 
+            if not os.path.exists(full_gen_path):
+                os.makedirs(full_gen_path, exist_ok=True)
+
             # image_shape get from cv2 img
             Hb, Wb, Cb = IMG_SHAPE[0], IMG_SHAPE[1], IMG_SHAPE[2]
 

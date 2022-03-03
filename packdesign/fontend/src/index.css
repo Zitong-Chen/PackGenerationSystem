@@ -2,6 +2,7 @@ html {
   width: 100%;
   height: 100%;
   background-color: lightgrey;
+  overflow: hidden;
 }
 
 body {
@@ -102,6 +103,22 @@ body {
   /* margin: 1px 0; */
   background-color: #162654;
 }
+
+.option-console::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+.option-console::-webkit-scrollbar-thumb {
+  border-radius: 4px;
+  background   : #525B79;
+}
+
+.option-console::-webkit-scrollbar-track {
+  border-radius: 4px;
+  background:rgba(255, 255, 255, 0.8);
+}
+
 
 .option-footer {
   display: flex;
